@@ -58,7 +58,13 @@ namespace No._1
                 }
             }
         }
-
+        public Pacientes(string nombre, int edad, string dpi, int telefono)
+        {
+            this.nombre = nombre;
+            this.edad = edad;
+            this.dpi = dpi;
+            this.telefono = telefono;
+        }
 
     }
     internal class Program
@@ -66,7 +72,17 @@ namespace No._1
 
         static void Main(string[] args)
         {
-            Console.WriteLine("si");
+            bool edadValida;
+            int edad;
+            do
+            {
+                Console.WriteLine("Ingrese la edad");
+                edadValida=int.TryParse(Console.ReadLine(), out edad);
+                if(!edadValida)
+                {
+                    Console.WriteLine("Error, ingrese un número válido.");
+                }
+            } while (!edadValida||edad<0);
         }
     }
 }
