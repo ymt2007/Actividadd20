@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Intrinsics.Arm;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace No._1
 {
     class Pacientes
@@ -11,6 +13,7 @@ namespace No._1
 
         public string Nombre
         {
+
             get { return nombre; }
             set { 
                 if(value.Length<3)
@@ -60,10 +63,14 @@ namespace No._1
         }
         public Pacientes(string nombre, int edad, string dpi, int telefono)
         {
-            this.nombre = nombre;
-            this.edad = edad;
-            this.dpi = dpi;
-            this.telefono = telefono;
+            this.Nombre = nombre;
+            this.Edad = edad;
+            this.Dpi = dpi;
+            this.Telefono = telefono;
+        }
+        public void MostrarPaciente()
+        {
+            Console.WriteLine($"Nombre: {nombre}, DPI: {dpi}, Telefono: {telefono}, Edad: {edad}");
         }
 
     }
@@ -72,6 +79,8 @@ namespace No._1
 
         static void Main(string[] args)
         {
+            Console.WriteLine("Ingrese el nombre");
+            string nombre = Console.ReadLine();
             bool edadValida;
             int edad;
             do
@@ -82,7 +91,28 @@ namespace No._1
                 {
                     Console.WriteLine("Error, ingrese un número válido.");
                 }
-            } while (!edadValida||edad<0);
+            } while (!edadValida||edad<0||edad>120);
+            string dpi;
+            do
+            {
+                Console.WriteLine("Ingrese el DPI");
+                dpi = Console.ReadLine();
+                if (dpi.Length != 13)
+                {
+                    Console.WriteLine("Error, el DPI debe tener 13 dígitos.");
+                }
+            } while (dpi.ToString().Length!=13);
+            int telefono; bool telefonoValido;
+            do
+            {
+                Console.WriteLine("Ingrese el numero de telefono");
+                telefonoValido=int.TryParse(Console.ReadLine(),out telefono);
+                if(!telefonoValido)
+                    Console.WriteLine("Error, ingrese un nuvero valido");
+            } while (!telefonoValido||telefono.ToString().Length != 8);
+
+            Pacientes p = new Pacientes(nombre, edad, dpi, telefono);
+            p.MostrarPaciente();
         }
     }
 }
